@@ -25,7 +25,7 @@ class AndroidVirtualKeyboard(object):
     def main_loop(self):
         while 1:
             c = self.stdscr.getch()
-            self.stdscr.addstr(0, 0, str(c), curses.A_REVERSE)
+            self.stdscr.addstr(0, 0, "{!s} --> {!s}".format(c, self.binding.get(int(c), ''), curses.A_REVERSE)
 
     def start(self):
         self.stdscr = curses.initscr()
