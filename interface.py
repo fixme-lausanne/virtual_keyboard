@@ -14,7 +14,7 @@ class AndroidVirtualKeyboard(object):
     def __parse_binding(self, binding_file_path):
         for line in open(binding_file_path):
             stripped_line = line.split('#', 2)[0].strip()
-            if stripped_line
+            if stripped_line:
                 curse_key, adb_key = map(int,map(str.strip, stripped_line.split(':')))
                 self.binding[curse_key] = adb_key
 
