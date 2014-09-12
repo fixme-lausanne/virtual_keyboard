@@ -22,7 +22,7 @@ class AndroidVirtualKeyboard(object):
     def send_key(self, key):
         adb_key = self.binding.get(key, '')
         if adb_key:
-            self.adb('shell input keyevent {!s}'.format(key))
+            self.adb('shell', 'input', 'keyevent', key)
 
 
     def main_loop(self):
