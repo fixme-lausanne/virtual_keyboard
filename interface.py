@@ -25,7 +25,7 @@ class AndroidVirtualKeyboard(object):
         adb_key = self.binding.get(key, '')
         if adb_key:
             self.adb('shell', 'input', 'keyevent', key)
-            self.stdscr.addstr(0, 1, "shell input keyevent {!s}".format(key))
+            self.stdscr.addstr(1, 0, "shell input keyevent {!s}".format(key))
 
 
     def main_loop(self):
