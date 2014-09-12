@@ -8,6 +8,7 @@ class AndroidVirtualKeyboard(object):
     def __init__(self, adb_path, key_file="binding"):
         print(adb_path)
         self.adb = sh.Command(adb_path)
+        self.stdscr = None
         self.binding = {}
         self.__parse_binding(key_file)
 
@@ -21,17 +22,19 @@ class AndroidVirtualKeyboard(object):
     def send_key(self, key):
         pass
 
-    def main_loop():
+    def main_loop(self):
         while 1:
-            c = stdscr.getch()
-            stdscr.addstr(0, 0, str(c), curses.A_REVERSE)
+            c = self.stdscr.getch()
+            self.stdscr.addstr(0, 0, str(c), curses.A_REVERSE)
 
-    def start():
-        stdscr = curses.initscr()
+    def start(self):
+        self.stdscr = curses.initscr()
         curses.noecho()
 
-    def end():
-        curses.nocbreak(); stdscr.keypad(0); curses.echo()
+    def end(self):
+        curses.nocbreak()
+        self.stdscr.keypad(0)
+        curses.echo()
         curses.endwin()
 
 if __name__ == '__main__':
@@ -41,3 +44,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     virtual_keyboard = AndroidVirtualKeyboard(args.adb_path)
     virtual_keyboard.start()
+    virtual_keyboard.main_loop()
