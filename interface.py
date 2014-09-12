@@ -18,20 +18,20 @@ class AndroidVirtualKeyboard(object):
         for line in open(binding_file_path):
             stripped_line = line.split('#', 2)[0].strip()
             if stripped_line:
-                curse_key, adb_key = map(int,map(str.strip, stripped_line.split(':')))
-                self.binding[curse_key] = adb_key
+                curse_key, type_key, adb_key = map(str.strip, stripped_line.split(':'))
+                self.binding[int(curse_key)] = (type_key, int(adb_key), )
 
     def send_key(self, key):
         adb_key = self.binding.get(key, '')
         if adb_key:
-            self.adb('shell', 'input', 'keyevent', adb_key)
-            self.stdscr.addstr(1, 0, "shell input keyevent {!s}".format(adb_key))
-
-    def send_text(self, text):
-        adb_key = self.binding.get(key, '')
-        if adb_key:
-            self.adb('shell', 'input', 'keyevent', key)
-            self.stdscr.addstr(1, 0, "shell input keyevent {!s}".format(key))
+            key_type, key_value = adb_key
+            if key_type == 'key':
+                self.adb('shell', 'input', 'keyevent', key_value)
+                self.stdscr.addstr(1, 0, "shell input keyevent {!s}".format(key_value))
+            elif key_type == 'text':
+                ascii_value = chr(key_value)
+                self.adb('shell', 'input', 'text', ascii_value)
+                self.stdscr.addstr(1, 0, "shell input text {!s}".format(ascii_value))
 
     def main_loop(self):
         while 1:
