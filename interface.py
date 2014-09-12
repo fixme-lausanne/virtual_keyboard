@@ -13,9 +13,10 @@ class AndroidVirtualKeyboard(object):
 
     def __parse_binding(self, binding_file_path):
         for line in open(binding_file_path):
-            stripped_line = line.split('#', 2)[0]
-            curse_key, adb_key = map(int,map(str.strip, stripped_line.split(':')))
-            self.binding[curse_key] = adb_key
+            stripped_line = line.split('#', 2)[0].strip()
+            if stripped_line
+                curse_key, adb_key = map(int,map(str.strip, stripped_line.split(':')))
+                self.binding[curse_key] = adb_key
 
     def send_key(self, key):
         pass
@@ -39,6 +40,4 @@ if __name__ == '__main__':
     parser.add_argument('--adb_path', '-p', nargs='?', help='specify adb path', default='adb')
     args = parser.parse_args()
     virtual_keyboard = AndroidVirtualKeyboard(args.adb_path)
-
-    #main_loop()
-
+    virtual_keyboard.start()
