@@ -1,6 +1,8 @@
 import sh
 import curses
 import argparse
+import atexit
+import logging
 #adb_path = "/home/malik/adt/adt-bundle-linux-x86_64-20140702/sdk/platform-tools/adb"
 
 
@@ -23,6 +25,7 @@ class AndroidVirtualKeyboard(object):
         adb_key = self.binding.get(key, '')
         if adb_key:
             self.adb('shell', 'input', 'keyevent', key)
+            self.stdscr.addstr(0, 1, "shell input keyevent {!s}".format(key))
 
 
     def main_loop(self):
@@ -36,6 +39,7 @@ class AndroidVirtualKeyboard(object):
                 pass
 
     def start(self):
+        atexit.
         self.stdscr = curses.initscr()
         curses.noecho()
 
