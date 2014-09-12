@@ -29,7 +29,7 @@ class AndroidVirtualKeyboard(object):
                 self.adb('shell', 'input', 'keyevent', key_value)
                 self.stdscr.addstr(1, 0, "shell input keyevent {!s}".format(key_value))
             elif key_type == 'text':
-                ascii_value = chr(key_value)
+                ascii_value = chr(key)
                 self.adb('shell', 'input', 'text', ascii_value)
                 self.stdscr.addstr(1, 0, "shell input text {!s}".format(ascii_value))
 
