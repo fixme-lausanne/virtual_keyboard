@@ -20,12 +20,20 @@ class AndroidVirtualKeyboard(object):
                 self.binding[curse_key] = adb_key
 
     def send_key(self, key):
-        pass
+        adb_key = self.binding.get(key, '')
+        if adb_key:
+            self.adb('shell input keyevent {!s}'.format(key))
+
 
     def main_loop(self):
         while 1:
-            c = self.stdscr.getch()
-            self.stdscr.addstr(0, 0, "{!s} --> {!s}".format(c, self.binding.get(int(c), ''), curses.A_REVERSE)
+            user_keycode = self.stdscr.getch()
+            try:
+                c = int(user_keycode)
+                self.stdscr.addstr(0, 0, "{!s} --> {!s}".format(c, self.binding.get(c, ''), curses.A_REVERSE)
+                self.send_key(c)
+            except ValueError:
+                pass
 
     def start(self):
         self.stdscr = curses.initscr()
