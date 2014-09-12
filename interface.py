@@ -30,7 +30,7 @@ class AndroidVirtualKeyboard(object):
             user_keycode = self.stdscr.getch()
             try:
                 c = int(user_keycode)
-                self.stdscr.addstr(0, 0, "{!s} --> {!s}".format(c, self.binding.get(c, ''), curses.A_REVERSE)
+                self.stdscr.addstr(0, 0, "{!s} --> {!s}".format(c, self.binding.get(c, '')), curses.A_REVERSE)
                 self.send_key(c)
             except ValueError:
                 pass
